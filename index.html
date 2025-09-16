@@ -1,399 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swifties</title>
-    <style>
-        * {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swifties</title>
+    <style>
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #ff69b4, #ff1493, #db7093);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #ff69b4, #ff1493, #db7093);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
 
-        .header {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+        .header {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-        .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            letter-spacing: 2px;
-        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+        }
 
-        .subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
 
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            min-height: calc(100vh - 200px);
-        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            min-height: calc(100vh - 200px);
+        }
 
-        .video-container {
-            width: 100%;
-            max-width: 560px;
-            aspect-ratio: 16/9;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: none;
-            margin-bottom: 20px;
-        }
+        .video-container {
+            width: 100%;
+            max-width: 560px;
+            aspect-ratio: 16/9;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
+            margin-bottom: 20px;
+        }
 
-        .video-container.show {
-            display: block;
-            animation: fadeInUp 0.6s ease-out;
-        }
+        .video-container.show {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
-        .welcome-message {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
+        .welcome-message {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
 
-        .welcome-message h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
+        .welcome-message h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
 
-        .welcome-message p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            line-height: 1.5;
-        }
+        .welcome-message p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
 
-        .bottom-controls {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
+        .bottom-controls {
+            display: flex; /* Aggiunto Flexbox */
+            justify-content: center; /* Centra i pulsanti */
+            gap: 20px; /* Spazio tra i pulsanti */
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
 
-        .random-button {
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
-            display: block;
-            padding: 18px 30px;
-            background: linear-gradient(45deg, #ff1493, #ff69b4);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.4);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+        .random-button, .quiz-button { /* Aggiunto il selettore per il nuovo pulsante */
+            flex-shrink: 1; /* Permette al pulsante di restringersi */
+            width: 100%;
+            max-width: 300px;
+            padding: 18px 30px;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .random-button {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+        }
+        
+        .quiz-button {
+            background: linear-gradient(45deg, #8A2BE2, #9400D3); /* Nuova sfumatura per il pulsante del quiz */
+        }
 
-        .random-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.6);
-        }
+        .random-button:hover, .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.6);
+        }
 
-        .random-button:active {
-            transform: translateY(0);
-        }
+        .random-button:active, .quiz-button:active {
+            transform: translateY(0);
+        }
 
-        .random-button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
+        .random-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
 
-        .loading {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-        .loading.show {
-            display: block;
-        }
+        .loading.show {
+            display: block;
+        }
 
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-        .sparkles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
+        .sparkles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
 
-        .sparkle {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.5rem;
-            animation: sparkle 3s ease-in-out infinite;
-        }
+        .sparkle {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.5rem;
+            animation: sparkle 3s ease-in-out infinite;
+        }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
 
-        @keyframes sparkle {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2rem;
-            }
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
 
-            .welcome-message h2 {
-                font-size: 1.5rem;
-            }
+            .welcome-message h2 {
+                font-size: 1.5rem;
+            }
 
-            .welcome-message p {
-                font-size: 1rem;
-            }
+            .welcome-message p {
+                font-size: 1rem;
+            }
 
-            .main-content {
-                padding: 15px;
-                min-height: calc(100vh - 180px);
-            }
+            .main-content {
+                padding: 15px;
+                min-height: calc(100vh - 180px);
+            }
 
-            .video-container {
-                border-radius: 15px;
-            }
+            .video-container {
+                border-radius: 15px;
+            }
 
-            .random-button {
-                padding: 16px 25px;
-                font-size: 1.1rem;
-            }
-        }
+            .random-button, .quiz-button { /* Aggiunto il selettore anche qui per coerenza */
+                padding: 16px 25px;
+                font-size: 1.1rem;
+            }
+        }
 
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1.8rem;
-            }
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.8rem;
+            }
 
-            .header {
-                padding: 15px;
-            }
+            .header {
+                padding: 15px;
+            }
 
-            .main-content {
-                padding: 10px;
-            }
+            .main-content {
+                padding: 10px;
+            }
 
-            .bottom-controls {
-                padding: 15px;
-            }
-        }
-    </style>
+            .bottom-controls {
+                flex-direction: column; /* I pulsanti si impilano su schermi piccoli */
+                align-items: center;
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="sparkles" id="sparkles"></div>
-    
-    <header class="header">
-        <h1 class="logo">✨ Swifties ✨</h1>
-        <p class="subtitle">Your Taylor Swift Video Collection</p>
-    </header>
+    <div class="sparkles" id="sparkles"></div>
+    
+    <header class="header">
+        <h1 class="logo">✨ Swifties ✨</h1>
+        <p class="subtitle">Your Taylor Swift Video Collection</p>
+    </header>
 
-    <main class="main-content">
-        <div class="welcome-message" id="welcomeMessage">
-            <h2>Welcome, Swiftie! 💖</h2>
-            <p>Tap the button below to watch a random Taylor Swift music video</p>
-        </div>
+    <main class="main-content">
+        <div class="welcome-message" id="welcomeMessage">
+            <h2>Welcome, Swiftie! 💖</h2>
+            <p>Tap the button below to watch a random Taylor Swift music video</p>
+        </div>
 
-        <div class="video-container" id="videoContainer">
-            <iframe id="youtubePlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </main>
+        <div class="video-container" id="videoContainer">
+            <iframe id="youtubePlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </main>
 
-    <div class="bottom-controls">
-        <button class="random-button" id="randomButton" onclick="playRandomVideo()">
-            <span id="buttonText">🎵 Play Random Video</span>
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-            </div>
-        </button>
-    </div>
+    <div class="bottom-controls">
+        <button class="random-button" id="randomButton" onclick="playRandomVideo()">
+            <span id="buttonText">🎵 Play Random Video</span>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+            </div>
+        </button>
+        
+        <a href="quiz.html" class="quiz-button">
+            <span>Testa la tua conoscenza! ✨</span>
+        </a>
+    </div>
 
-    <script>
-        // Array of Taylor Swift music video IDs from YouTube
-        const taylorSwiftVideos = [
-            'YykjpeuMNEk', // Look What You Made Me Do
-            'nfWlot6h_JM', // Shake It Off
-            'e-ORhEE9VVg', // Blank Space
-            'WA4iX5D9Z64', // Anti-Hero
-            'Dkk9gvTmCXY', // Karma
-            'pvG4kOb_8Yk', // bejeweled
-            'V54CEElTF_U', // Lavender Haze
-            'ic8j13piAhQ', // Bad Blood
-            'QcIy9NiNbmo', // 22
-            'vNoKguSdy4Y', // Style
-            'kK4oWP9aLT8', // Out of the Woods
-            'PA5eWHoBh4g', // Wildest Dreams
-            'fW80LfuoL6o', // How You Get the Girl
-            'A_N6jzC_6XQ', // Welcome to New York
-            'r3TZ7tUWH7E', // I Knew You Were Trouble
-            'GkD20ajVxnY', // Begin Again
-            'WsKZcHOpcFM', // Everything Has Changed
-            'nSDgHBxUbVQ', // I Don't Wanna Live Forever
-            'tn2bGAOlKdU', // Delicate
-            'BalvqrXFNzg', // Ready For It
-            'R_9Yp05zbkY', // End Game
-            'WyYwipkpDJc', // Getaway Car
-            'FeFcTTVhR7M', // Call It What You Want
-            'YOEJqKEpFJI', // Don't Blame Me
-            'agRdKgFq9hI', // Gorgeous
-            'rP3UngLFou4', // Paper Rings
-            'J_9ayiozSoE', // ME!
-            'Idh8n5XuYIA', // The Archer
-            'dvn9HhJVEoc', // Lover
-            'rMXUEWDebyQ'  // The Man
-        ];
+    <script>
+        // Array of Taylor Swift music video IDs from YouTube
+        const taylorSwiftVideos = [
+            'YykjpeuMNEk', // Look What You Made Me Do
+            'nfWlot6h_JM', // Shake It Off
+            'e-ORhEE9VVg', // Blank Space
+            'WA4iX5D9Z64', // Anti-Hero
+            'Dkk9gvTmCXY', // Karma
+            'pvG4kOb_8Yk', // bejeweled
+            'V54CEElTF_U', // Lavender Haze
+            'ic8j13piAhQ', // Bad Blood
+            'QcIy9NiNbmo', // 22
+            'vNoKguSdy4Y', // Style
+            'kK4oWP9aLT8', // Out of the Woods
+            'PA5eWHoBh4g', // Wildest Dreams
+            'fW80LfuoL6o', // How You Get the Girl
+            'A_N6jzC_6XQ', // Welcome to New York
+            'r3TZ7tUWH7E', // I Knew You Were Trouble
+            'GkD20ajVxnY', // Begin Again
+            'WsKZcHOpcFM', // Everything Has Changed
+            'nSDgHBxUbVQ', // I Don't Wanna Live Forever
+            'tn2bGAOlKdU', // Delicate
+            'BalvqrXFNzg', // Ready For It
+            'R_9Yp05zbkY', // End Game
+            'WyYwipkpDJc', // Getaway Car
+            'FeFcTTVhR7M', // Call It What You Want
+            'YOEJqKEpFJI', // Don't Blame Me
+            'agRdKgFq9hI', // Gorgeous
+            'rP3UngLFou4', // Paper Rings
+            'J_9ayiozSoE', // ME!
+            'Idh8n5XuYIA', // The Archer
+            'dvn9HhJVEoc', // Lover
+            'rMXUEWDebyQ'  // The Man
+        ];
 
-        let currentVideoIndex = -1;
+        let currentVideoIndex = -1;
 
-        function createSparkles() {
-            const sparklesContainer = document.getElementById('sparkles');
-            const sparkleSymbols = ['✨', '💖', '⭐', '💫', '🌟', '💕'];
-            
-            for (let i = 0; i < 15; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.textContent = sparkleSymbols[Math.floor(Math.random() * sparkleSymbols.length)];
-                sparkle.style.left = Math.random() * 100 + '%';
-                sparkle.style.top = Math.random() * 100 + '%';
-                sparkle.style.animationDelay = Math.random() * 3 + 's';
-                sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                sparklesContainer.appendChild(sparkle);
-            }
-        }
+        function createSparkles() {
+            const sparklesContainer = document.getElementById('sparkles');
+            const sparkleSymbols = ['✨', '💖', '⭐', '💫', '🌟', '💕'];
+            
+            for (let i = 0; i < 15; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = sparkleSymbols[Math.floor(Math.random() * sparkleSymbols.length)];
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                sparklesContainer.appendChild(sparkle);
+            }
+        }
 
-        function playRandomVideo() {
-            const button = document.getElementById('randomButton');
-            const buttonText = document.getElementById('buttonText');
-            const loading = document.getElementById('loading');
-            const videoContainer = document.getElementById('videoContainer');
-            const youtubePlayer = document.getElementById('youtubePlayer');
-            const welcomeMessage = document.getElementById('welcomeMessage');
+        function playRandomVideo() {
+            const button = document.getElementById('randomButton');
+            const buttonText = document.getElementById('buttonText');
+            const loading = document.getElementById('loading');
+            const videoContainer = document.getElementById('videoContainer');
+            const youtubePlayer = document.getElementById('youtubePlayer');
+            const welcomeMessage = document.getElementById('welcomeMessage');
 
-            // Show loading state
-            button.disabled = true;
-            buttonText.style.opacity = '0';
-            loading.classList.add('show');
+            // Show loading state
+            button.disabled = true;
+            buttonText.style.opacity = '0';
+            loading.classList.add('show');
 
-            // Get random video (ensure it's different from the current one)
-            let randomIndex;
-            do {
-                randomIndex = Math.floor(Math.random() * taylorSwiftVideos.length);
-            } while (randomIndex === currentVideoIndex && taylorSwiftVideos.length > 1);
-            
-            currentVideoIndex = randomIndex;
-            const videoId = taylorSwiftVideos[randomIndex];
+            // Get random video (ensure it's different from the current one)
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * taylorSwiftVideos.length);
+            } while (randomIndex === currentVideoIndex && taylorSwiftVideos.length > 1);
+            
+            currentVideoIndex = randomIndex;
+            const videoId = taylorSwiftVideos[randomIndex];
 
-            // Simulate loading time for better UX
-            setTimeout(() => {
-                // Hide welcome message and show video
-                welcomeMessage.style.display = 'none';
-                
-                // Set YouTube embed URL with autoplay
-                youtubePlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0&modestbranding=1`;
-                
-                // Show video container
-                videoContainer.classList.add('show');
+            // Simulate loading time for better UX
+            setTimeout(() => {
+                // Hide welcome message and show video
+                welcomeMessage.style.display = 'none';
+                
+                // Set YouTube embed URL with autoplay
+                youtubePlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&showinfo=0&modestbranding=1`;
+                
+                // Show video container
+                videoContainer.classList.add('show');
 
-                // Reset button state
-                button.disabled = false;
-                buttonText.textContent = '🎵 Play Another Video';
-                buttonText.style.opacity = '1';
-                loading.classList.remove('show');
-            }, 1000);
-        }
+                // Reset button state
+                button.disabled = false;
+                buttonText.textContent = '🎵 Play Another Video';
+                buttonText.style.opacity = '1';
+                loading.classList.remove('show');
+            }, 1000);
+        }
 
-        // Initialize sparkles when page loads
-        window.addEventListener('load', () => {
-            createSparkles();
-        });
+        // Initialize sparkles when page loads
+        window.addEventListener('load', () => {
+            createSparkles();
+        });
 
-        // Prevent zoom on double tap (iOS Safari)
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
+        // Prevent zoom on double tap (iOS Safari)
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
 
-        // Add viewport meta tag dynamically for better mobile support
-        const viewport = document.querySelector('meta[name="viewport"]');
-        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-    </script>
+        // Add viewport meta tag dynamically for better mobile support
+        const viewport = document.querySelector('meta[name="viewport"]');
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+    </script>
 </body>
 </html>
